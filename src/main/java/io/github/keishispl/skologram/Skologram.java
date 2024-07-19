@@ -1,6 +1,7 @@
 package io.github.keishispl.skologram;
 
 import io.github.keishispl.skologram.other.UpdateChecker;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import ch.njol.skript.Skript;
@@ -31,22 +32,27 @@ public final class Skologram extends JavaPlugin {
     public void onEnable() {
         instance = this;
         getServer().getPluginManager().registerEvents(new UpdateChecker(), this);
-        try {
-            addon = Skript.registerAddon(this);
-            addon.setLanguageFileDirectory("lang");
-            registerPluginElements("DecentHolograms", "DecentHolograms");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        metrics = new Metrics(this, 20162);
+        if (getServer().getPluginManager().isPluginEnabled("Skript")) {
+            try {
+                addon = Skript.registerAddon(this);
+                addon.setLanguageFileDirectory("lang");
+                registerPluginElements("DecentHolograms", "DecentHolograms");
+            } catch (IOException e) {
+                Logger.error("An error occurred while loading Skologram");
+                throw new RuntimeException(e);
+            }
+            metrics.addCustomChart(new SimplePie("skript_version", () -> Skript.getVersion().toString()));
+            start = System.currentTimeMillis()/50;
+            Logger.success("Skologram has been enabled");
+            Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
+                latest_version = latestVersion();
+                if (getConfig().getBoolean("version-check-msg")) Logger.warn("Got latest version."); // not a warn just want yellow
+            }, 0L, 144000L);
+            data_path = this.getDataFolder().getAbsolutePath();
+        } else {
+            Logger.error("Skript is not enabled");
         }
-        metrics.addCustomChart(new SimplePie("skript_version", () -> Skript.getVersion().toString()));
-        start = System.currentTimeMillis()/50;
-        Logger.success("Skologram has been enabled");
-        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
-            latest_version = latestVersion();
-            if (getConfig().getBoolean("version-check-msg")) Logger.warn("Got latest version."); // not a warn just want yellow
-        }, 0L, 144000L);
-        data_path = this.getDataFolder().getAbsolutePath();
-
     }
 
     @Override
