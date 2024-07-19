@@ -1,0 +1,12 @@
+version: 1.0
+
+types:
+    decenthologramclicktype: decenthologram ?click ?type¦s @a
+    decenthologram: decenthologram¦s @a
+    decenthologrampage: decenthologram ?page¦s @a
+
+decenthologramclicktype:
+    right: right
+    left: left
+    right_shift: right shift, shift right
+    left_shift: left shift, shift left

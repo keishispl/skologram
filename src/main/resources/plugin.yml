@@ -1,0 +1,7 @@
+name: skologram
+version: '${version}'
+main: io.github.keishispl.skologram.Skologram
+api-version: '1.20'
+prefix: 'Skologram'
+load: STARTUP
+depend: [Skript, DecentHolograms]
