@@ -1,6 +1,7 @@
-name: skologram
+name: Skologram
 version: '${version}'
 main: io.github.keishispl.skologram.Skologram
 api-version: '1.20'
 prefix: 'Skologram'
-depend: [Skript, DecentHolograms]
+depend: [Skript]
+soft-depend: [DecentHolograms]

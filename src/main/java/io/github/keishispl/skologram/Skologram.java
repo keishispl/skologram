@@ -27,13 +27,15 @@ public final class Skologram extends JavaPlugin {
     public static String data_path;
     public static String latest_version;
     public static HashMap<String, Boolean> element_map = new HashMap<>();
-    public static final String prefix = net.md_5.bungee.api.ChatColor.of("#00ff00") + "[Skologram] " + ChatColor.RESET;
+    public static final String prefix = ChatColor.GRAY + "[" + ChatColor.BLUE + "Skologram" + ChatColor.GRAY + "] " + ChatColor.RESET;
 
     public void onEnable() {
         instance = this;
         getServer().getPluginManager().registerEvents(new UpdateChecker(), this);
-        metrics = new Metrics(this, 20162);
-        if (getServer().getPluginManager().isPluginEnabled("Skript")) {
+        metrics = new Metrics(this, 22718);
+        if (!getServer().getPluginManager().isPluginEnabled("Skript")) {
+            Logger.error("Skript is not enabled. Skologram will not work.");
+        } else {
             try {
                 addon = Skript.registerAddon(this);
                 addon.setLanguageFileDirectory("lang");
@@ -44,14 +46,12 @@ public final class Skologram extends JavaPlugin {
             }
             metrics.addCustomChart(new SimplePie("skript_version", () -> Skript.getVersion().toString()));
             start = System.currentTimeMillis()/50;
-            Logger.success("Skologram has been enabled");
+            Logger.success("Skologram has been loaded.");
             Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
                 latest_version = latestVersion();
                 if (getConfig().getBoolean("version-check-msg")) Logger.warn("Got latest version."); // not a warn just want yellow
             }, 0L, 144000L);
             data_path = this.getDataFolder().getAbsolutePath();
-        } else {
-            Logger.error("Skript is not enabled");
         }
     }
 
@@ -73,13 +73,13 @@ public final class Skologram extends JavaPlugin {
         return addon;
     }
 
-    public void registerPluginElements(String pluginName, String name) throws IOException {
+    public void registerPluginElements(String name, String pluginName) throws IOException {
         element_map.put(name, false);
         if (Bukkit.getServer().getPluginManager().isPluginEnabled(pluginName)) {
-            addon.loadClasses("io.github.keishispl.features."+name.toLowerCase());
-            Logger.success(name+" elements loaded.");
+            addon.loadClasses("io.github.keishispl.skologram.modules."+name.toLowerCase());
+            Logger.info("Loaded Module: " + name);
             element_map.put(name, true);
-        } else Logger.error(name+" elements not loaded.");
+        } else Logger.info("The " + name +" Plugin is not found, ignoring...");
         metrics.addCustomChart(new SimplePie(name, () -> Boolean.toString(element_map.get(name))));
     }
 
@@ -89,7 +89,7 @@ public final class Skologram extends JavaPlugin {
             Bukkit.getConsoleSender().sendMessage(prefix + ChatColor.GREEN + message);
         }
 
-        public static void log(String message){
+        public static void info(String message){
             Bukkit.getConsoleSender().sendMessage(prefix + ChatColor.WHITE + message);
         }
 
