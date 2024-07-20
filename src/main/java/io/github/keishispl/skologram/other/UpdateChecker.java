@@ -19,8 +19,8 @@ public class UpdateChecker implements Listener {
         if (!Objects.equals(latest_version, instance.getDescription().getVersion())){
             p.sendMessage(miniMessage().deserialize("""
                         
-                        <click:open_url:'https://modrinth.com/plugin/skologram/version/<NEW_VERSION>'><hover:show_text:'Click to update!'><gray>There is a new <color:#40ff00>Skologram <gray>update! <dark_gray>(v<OLD_VERSION> -> v<NEW_VERSION>)
-                        <yellow>Click <green>here</green> to download!
+                        <click:open_url:'https://modrinth.com/plugin/skologram/version/<NEW_VERSION>'><hover:show_text:'Click to update!'><gray>There is a new <blue>Skologram <gray>update! <dark_gray>(v<OLD_VERSION> -> v<NEW_VERSION>)
+                        <white>Click <aqua>here<white> to download!
                         """.replaceAll("<NEW_VERSION>", latest_version)
                     .replaceAll("<OLD_VERSION>", instance.getDescription().getVersion())
             ));
