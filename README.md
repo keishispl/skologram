@@ -25,4 +25,4 @@ Please suggest syntax ideas in the [Github](https://github.com/keishispl/skologr
 
 For suggestions, you can also suggest them in Github as well!
 
-This plugin was made because I am done with console filling with "This line has been set!", it is crazy.
+This plugin was made because I am done with console filling with "This line has been set!", I can barely see the important stuff!

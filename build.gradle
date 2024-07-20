@@ -9,6 +9,7 @@ repositories {
     mavenCentral()
     mavenLocal()
     maven {url = "https://repo.papermc.io/repository/maven-public/"}
+    maven {url = "https://repo.fancyplugins.de/releases"}
     maven {url = "https://repo.skriptlang.org/releases"}
     maven {url = "https://jitpack.io"}
 }
@@ -19,6 +20,7 @@ dependencies {
         transitive = false
     }
     compileOnly "com.github.decentsoftware-eu:decentholograms:2.8.8"
+    compileOnly "de.oliver:FancyHolograms:2.3.0"
 }
 
 def targetJavaVersion = 17
