@@ -1,7 +1,22 @@
 name: Skologram
 version: '${version}'
+author: keishispl
+description: Add support to Holograms in Skript
 main: io.github.keishispl.skologram.Skologram
 api-version: '1.20'
 prefix: 'Skologram'
 depend: [Skript]
-soft-depend: [DecentHolograms]
+softdepend: [DecentHolograms]
+website: https://github.com/keishispl/skologram
+commands:
+  skologram:
+    description: The main command for Skologram.
+permissions:
+  skologram.command.dependencies:
+    description: Dependencies sub command for /skologram.
+  skologram.command.info:
+    description: Info sub command for /skologram.
+  skologram.command.reload:
+    description: Reload sub command for /skologram.
+  skologram.command.update:
+    description: Update sub command for /skologram.
